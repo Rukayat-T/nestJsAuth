@@ -1,8 +1,20 @@
 import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // app.setGlobalPrefix('api')
+  const config = new DocumentBuilder()
+  .setTitle('Authentication app')
+  .setDescription('Made just to test authentication, authorization and rbac')
+  .setVersion('1.0')
+  .addTag('Ruka Rocks!!!')
+  .build();
+const document = SwaggerModule.createDocument(app, config);
+SwaggerModule.setup('api', app, document);
   await app.listen(3000);
 }
 bootstrap();
+
+
