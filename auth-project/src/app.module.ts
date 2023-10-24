@@ -3,6 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UserEntity } from './entities/UserEntity.entity';
+import { AuthContoller } from './controllers/authController.controller';
+import { AuthService } from './services/AuthService.service';
 
 @Module({
   imports: [
@@ -13,12 +16,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       port: parseInt(<string>process.env.POSTGRES_PORT),
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
-      database: process.env.TZPOSTGRES_DATABASE,
+      database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
       synchronize: true
-    })
+    }),
+    TypeOrmModule.forFeature([UserEntity])
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, AuthContoller],
+  providers: [AppService, AuthService],
 })
 export class AppModule {}
