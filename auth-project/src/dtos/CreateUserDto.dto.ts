@@ -1,5 +1,6 @@
-import { IsNumber, IsString } from "@nestjs/class-validator"
+import { IsNumber, IsString, isString } from "@nestjs/class-validator"
 import { ApiProperty } from "@nestjs/swagger"
+import { Role } from "src/entities/role.enum"
 
 export class CreateUserDto{
 
@@ -13,9 +14,18 @@ export class CreateUserDto{
 
     @IsString()
     @ApiProperty({example: '*******', description: "user's valid password", required: true})
-    password: string
+    password1: string
+
+    @IsString()
+    @ApiProperty({example: '*******', description: "same as password1", required: true})
+    password2: string
 
     @IsNumber()
     @ApiProperty({example: 26, description: "user's age", required: true})
     age: number
+
+    // @IsString()
+    @ApiProperty({example: 'USER', description: "user role wither USER or ADMIN", required: true})
+    role: Role
+
 }

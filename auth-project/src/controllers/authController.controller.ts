@@ -11,6 +11,6 @@ export class AuthContoller{
 
     @Post("createUser")
     async createUser(@Body() createUserDto : CreateUserDto) : Promise<BaseResponse>{
-        return this.authService.createUser(createUserDto);
+        return this.authService.register(createUserDto);
     }
 }
