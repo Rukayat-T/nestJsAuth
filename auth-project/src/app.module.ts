@@ -6,9 +6,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entities/UserEntity.entity';
 import { AuthContoller } from './controllers/authController.controller';
 import { AuthService } from './services/AuthService.service';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtGuard } from './guards/jwt.guard';
+import { JwtStrategy } from './guards/jwt.strategy';
 
 @Module({
   imports: [
+    JwtModule.registerAsync({
+      useFactory: () => ({
+        secret: process.env.JWT_SECRET,
+        signOptions: { expiresIn: "3600s"},
+      }),
+    }),
     ConfigModule.forRoot({isGlobal: true}),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -23,6 +32,6 @@ import { AuthService } from './services/AuthService.service';
     TypeOrmModule.forFeature([UserEntity])
   ],
   controllers: [AppController, AuthContoller],
-  providers: [AppService, AuthService],
+  providers: [AppService, AuthService, JwtGuard, JwtStrategy],
 })
 export class AppModule {}

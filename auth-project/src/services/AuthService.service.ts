@@ -7,12 +7,14 @@ import { Repository } from "typeorm";
 import * as bcrypt from 'bcrypt';
 import { Observable, from } from 'rxjs';
 import { Role } from 'src/entities/role.enum';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService{
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository: Repository<UserEntity>,
+        private jwtService: JwtService
     ){}
 
     async createUser(createUserDto: CreateUserDto): Promise<BaseResponse>{
@@ -87,4 +89,63 @@ export class AuthService{
             
         }
     }
+
+    async validateUserPassword(password: string, user: UserEntity): Promise<any>{
+        if (user){
+        return await bcrypt.compare(password, user.password)
+    }
+    }
+
+    async login(email: string, password: string): Promise<any>{
+        const user = await this.userRepository.findOne({
+            where: {email: email}})
+
+        if(user){
+
+        const validate = await this.validateUserPassword(password, user)
+        if(validate == true){
+            const payload = {
+                'id': user.id,
+                'name': user.name,
+                'email': user.email,
+                'age': user.age,
+                'role': user.role
+            }
+
+            const token = await this.jwtService.signAsync({payload})
+            return {
+            token: token
+        }
+    }
+    }
+
+        return {
+            status: 400,
+            message: "email is incorrect"
+    
+    }
 }
+
+async getAllUsers(): Promise<BaseResponse>{
+    try {
+
+        const users = await this.userRepository.find()
+        if (users){
+            return {
+                status: 200,
+                message: "users found",
+                response: users
+            }
+        }
+        
+    } catch (error) {
+        console.log(error)
+        return {
+            status: 400,
+            message: "Bad Request",
+            response: error.detail,
+        }
+        
+    }
+}
+} 
