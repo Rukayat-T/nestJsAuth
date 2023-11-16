@@ -89,7 +89,8 @@ export class AuthService{
     }
     }
 
-    async login(email: string, password: string): Promise<any>{
+    async login(email: string, password: string): Promise<any>
+    {
         const findUser = await this.userRepository.findOne({
             where: {email: email}})
 
@@ -108,37 +109,46 @@ export class AuthService{
             const token = await this.jwtService.signAsync({user})
             return {
             token: token
+            }
         }
-    }
-    }
+        else{
+            return {
+                status: 400,
+                message: "password is incorrect"
+        
+         }
+
+        }
+     }
 
         return {
             status: 400,
             message: "email is incorrect"
     
+     }
     }
-}
 
-async getAllUsers(): Promise<BaseResponse>{
-    try {
+    async getAllUsers(): Promise<BaseResponse>{
+        try {
 
-        const users = await this.userRepository.find()
-        if (users){
-            return {
+            const users = await this.userRepository.find()
+            if (users){
+                return {
                 status: 200,
                 message: "users found",
                 response: users
+                }
             }
-        }
         
-    } catch (error) {
-        console.log(error)
-        return {
-            status: 400,
-            message: "Bad Request",
-            response: error.detail,
-        }
+        } catch (error) {
+            console.log(error)
+            return {
+                status: 400,
+                message: "Bad Request",
+                response: error.detail,
+            }
         
+        }
     }
-}
+
 } 
