@@ -5,9 +5,9 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import Register from './pages/register/Register';
-import Home from './pages/home/home';
-import Login from './pages/login/login';
-import { AuthProvider } from './context/AuthContext';
+import Home from './pages/home/Home.jsx';
+import Login from './pages/login/Login.jsx';
+import { AuthProvider } from './context/AuthContext.jsx';
 
 function App() {
 
