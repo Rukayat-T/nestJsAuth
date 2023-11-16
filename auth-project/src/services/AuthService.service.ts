@@ -97,22 +97,22 @@ export class AuthService{
     }
 
     async login(email: string, password: string): Promise<any>{
-        const user = await this.userRepository.findOne({
+        const findUser = await this.userRepository.findOne({
             where: {email: email}})
 
-        if(user){
+        if(findUser){
 
-        const validate = await this.validateUserPassword(password, user)
+        const validate = await this.validateUserPassword(password, findUser)
         if(validate == true){
-            const payload = {
-                'id': user.id,
-                'name': user.name,
-                'email': user.email,
-                'age': user.age,
-                'role': user.role
+            const user = {
+                id: findUser.id,
+                name: findUser.name,
+                email: findUser.email,
+                age: findUser.age,
+                role: findUser.role
             }
 
-            const token = await this.jwtService.signAsync({payload})
+            const token = await this.jwtService.signAsync({user})
             return {
             token: token
         }

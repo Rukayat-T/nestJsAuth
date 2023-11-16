@@ -9,15 +9,11 @@ import { AuthService } from './services/AuthService.service';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtGuard } from './guards/jwt.guard';
 import { JwtStrategy } from './guards/jwt.strategy';
+import { RolesGuard } from './guards/roles.guard';
+import { AuthModule } from './auth.module';
 
 @Module({
   imports: [
-    JwtModule.registerAsync({
-      useFactory: () => ({
-        secret: process.env.JWT_SECRET,
-        signOptions: { expiresIn: "3600s"},
-      }),
-    }),
     ConfigModule.forRoot({isGlobal: true}),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -29,9 +25,9 @@ import { JwtStrategy } from './guards/jwt.strategy';
       autoLoadEntities: true,
       synchronize: true
     }),
-    TypeOrmModule.forFeature([UserEntity])
+    AuthModule,
   ],
-  controllers: [AppController, AuthContoller],
-  providers: [AppService, AuthService, JwtGuard, JwtStrategy],
+  controllers: [AppController,],
+  providers: [AppService],
 })
 export class AppModule {}
