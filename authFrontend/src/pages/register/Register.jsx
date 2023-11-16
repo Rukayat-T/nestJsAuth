@@ -10,7 +10,7 @@ function Register() {
         password1: "",
         password2: "",
         age: "",
-        role: ""
+        role: "customer"
     })
 
     const checkbox = useRef();
