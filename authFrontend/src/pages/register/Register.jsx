@@ -50,7 +50,7 @@ function Register() {
     }
 
     const Register = async () => {
-        let res = await fetch("http://localhost:3000/auth/createUser",
+        let res = await fetch("https://nestauthservice.onrender.com/auth/createUser",
             {
                 method: "POST",
                 body: JSON.stringify(formData),
