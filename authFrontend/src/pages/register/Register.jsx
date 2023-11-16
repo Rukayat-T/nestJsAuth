@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { Navigate, redirect, useNavigate } from "react-router-dom";
+import { Link, Navigate, redirect, useNavigate } from "react-router-dom";
 
 function Register() {
     const navigate = useNavigate();
@@ -72,6 +72,9 @@ function Register() {
         <>
             <div className="signupBoxContainer bg-black min-w-full min-h-screen items-center justify-center flex">
                 <div className="signUpBox bg-white min-h-max w-6/12 items-center flex flex-col rounded-md p-5">
+                    <Link to={"/login"} className='' >
+                        <div className="underline hover:text-blue-400">click here to login</div>
+                    </Link>
                     <div className="signup items-center"> sign up</div>
                     <div className="form-container m-5 ">
                         <form action="" className="flex flex-col items-start gap-5 " onSubmit={handleSubmit} >
