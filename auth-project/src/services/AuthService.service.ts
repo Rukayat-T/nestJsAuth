@@ -56,13 +56,6 @@ export class AuthService{
             user.email = dto.email
             user.name = dto.name
             user.role = dto.role
-
-            // if (dto.role == "user"){
-            //     user.role = Role.USER
-            // }
-            // else {
-            //     user.role = Role.ADMIN
-            // }
            
             if (dto.password1 == dto.password2){
                 const hashed = await this.hashPassword(dto.password1)
@@ -83,8 +76,8 @@ export class AuthService{
             console.log(error)
             return {
                 status: 400,
-                message: "Bad Request",
-                response: error.detail,
+                message: "Bad Bad Request",
+                response: error,
             }
             
         }
