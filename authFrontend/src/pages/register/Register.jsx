@@ -1,8 +1,10 @@
-import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useEffect, useState } from "react";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
 
 function Register() {
-    const navigate = useNavigate
+    const navigate = useNavigate();
+    // const [items, setItems] = useState([]);
+    // const [user, setUser] = useState({})
     const [formData, setformData] = useState({
         name: "",
         email: "",
@@ -12,11 +14,14 @@ function Register() {
         role: "customer"
     })
 
+    // useEffect(() => {
+    //     localStorage.setItem('user', JSON.stringify(items));
+    // }, [items]);
+
     let handleSubmit = async (e) => {
 
         e.preventDefault()
         try {
-            console.log(formData)
             var data = new FormData();
             data.append("name", formData.name)
             data.append("email", formData.email)
@@ -25,25 +30,29 @@ function Register() {
             data.append("age", formData.age)
             data.append("role", formData.role)
 
-
-            console.log(data, "data")
-            let res = await fetch("http://localhost:3000/auth/createUser",
-                {
-                    method: "POST",
-                    body: JSON.stringify(formData),
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                });
-            let resJson = await res.json();
-            if (res.status === 200) {
-                navigate('/home')
-            } else {
-                alert("something went wrong")
-            }
+            Register()
         }
-        catch (e) {
-            console.log(e)
+        catch (err) {
+            console.log(err)
+        }
+
+    }
+
+    const Register = async () => {
+        let res = await fetch("http://localhost:3000/auth/createUser",
+            {
+                method: "POST",
+                body: JSON.stringify(formData),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+        let resJson = await res.json();
+        if (resJson.status === 200) {
+            // localStorage.setItem("user", JSON.stringify(resJson.response));
+            navigate("/login")
+        } else {
+            alert("something went wrong")
         }
 
     }

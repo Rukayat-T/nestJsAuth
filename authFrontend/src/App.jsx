@@ -7,6 +7,7 @@ import './App.css'
 import Register from './pages/register/Register';
 import Home from './pages/home/home';
 import Login from './pages/login/login';
+import { AuthProvider } from './context/AuthContext';
 
 function App() {
 
@@ -16,10 +17,14 @@ function App() {
       <Router>
         <Routes>
           <Route path='/' exact element={<Register />} />
-          <Route path='/home' exact element={<Home />} />
-          <Route path='/login' exact element={<Login />} />
-
         </Routes>
+        <AuthProvider>
+          <Routes>
+            {/* <Route path='/' exact element={<Register />} /> */}
+            <Route path='/home' exact element={<Home />} />
+            <Route path='/login' exact element={<Login />} />
+          </Routes>
+        </AuthProvider>
 
       </Router>
 
