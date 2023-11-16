@@ -1,24 +1,36 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Navigate, redirect, useNavigate } from "react-router-dom";
 
 function Register() {
     const navigate = useNavigate();
     // const [items, setItems] = useState([]);
-    // const [user, setUser] = useState({})
     const [formData, setformData] = useState({
         name: "",
         email: "",
         password1: "",
         password2: "",
         age: "",
-        role: "customer"
+        role: ""
     })
+
+    const checkbox = useRef();
+
+    const handleCheck = () => {
+        if (checkbox.current.checked) {
+            setformData({ ...formData, role: "admin" });
+        } else {
+            setformData({ ...formData, role: "customer" });
+        }
+    }
+
+
 
     // useEffect(() => {
     //     localStorage.setItem('user', JSON.stringify(items));
     // }, [items]);
 
     let handleSubmit = async (e) => {
+        handleCheck;
 
         e.preventDefault()
         try {
@@ -29,7 +41,6 @@ function Register() {
             data.append("password2", formData.password2)
             data.append("age", formData.age)
             data.append("role", formData.role)
-
             Register()
         }
         catch (err) {
@@ -111,13 +122,16 @@ function Register() {
                                     value={formData.age}
                                     onChange={(e) => setformData({ ...formData, age: e.target.value })} />
                             </div>
+                            <div className=" flex flex-col ">
+                                <label>Role</label>
+                                <select className="border-2 border-black rounded-md" value={formData.role} onChange={(e) => setformData({ ...formData, role: e.target.value })}>
+                                    <option value="customer">Customer</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
                             <button className="border-2 border-black rounded-md" type="button" onClick={handleSubmit}> signup</button>
                         </form>
                     </div>
-
-
-
-
                 </div>
             </div >
         </>

@@ -31,14 +31,13 @@ export const AuthProvider = ({ children }) => {
         });
         const res = await req.json();
         if (res.token) {
-            console.log(res)
             setAuthTokens(res);
             localStorage.setItem("authTokens", JSON.stringify(res));
             setUser(jwtDecode(res.token));
             localStorage.setItem("user", JSON.stringify(jwtDecode(res.token).user));
             navigate("/home")
         } else {
-            alert("Something went wrong");
+            alert("error: " + res.message);
         }
     };
 
