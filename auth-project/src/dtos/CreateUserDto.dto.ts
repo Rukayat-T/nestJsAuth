@@ -1,4 +1,4 @@
-import { IsNumber, IsString, isString } from "@nestjs/class-validator"
+import { IsNumber, IsString} from "class-validator"
 import { ApiProperty } from "@nestjs/swagger"
 import { Role } from "src/entities/role.enum"
 
