@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
 
     const loginUser = async (e) => {
         e.preventDefault();
-        const req = await fetch("http://localhost:3000/auth/login", {
+        const req = await fetch("https://nestauthservice.onrender.com/auth/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
