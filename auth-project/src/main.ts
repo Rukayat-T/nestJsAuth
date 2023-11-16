@@ -10,6 +10,7 @@ async function bootstrap() {
   .setDescription('Made just to test authentication, authorization and rbac')
   .setVersion('1.0')
   .addTag('Ruka Rocks!!!')
+  .addBearerAuth()
   .build();
 const document = SwaggerModule.createDocument(app, config);
 SwaggerModule.setup('api', app, document);

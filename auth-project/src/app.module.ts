@@ -6,6 +6,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserEntity } from './entities/UserEntity.entity';
 import { AuthContoller } from './controllers/authController.controller';
 import { AuthService } from './services/AuthService.service';
+import { JwtModule } from '@nestjs/jwt';
+import { JwtGuard } from './guards/jwt.guard';
+import { JwtStrategy } from './guards/jwt.strategy';
+import { RolesGuard } from './guards/roles.guard';
+import { AuthModule } from './auth.module';
 
 @Module({
   imports: [
@@ -20,9 +25,9 @@ import { AuthService } from './services/AuthService.service';
       autoLoadEntities: true,
       synchronize: true
     }),
-    TypeOrmModule.forFeature([UserEntity])
+    AuthModule,
   ],
-  controllers: [AppController, AuthContoller],
-  providers: [AppService, AuthService],
+  controllers: [AppController,],
+  providers: [AppService],
 })
 export class AppModule {}
