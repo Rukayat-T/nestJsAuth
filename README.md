@@ -1,7 +1,7 @@
 # nestJsAuth
+full stack application written in nestjs, react and postgresql
 authentication and RBAC 
-i will also be learning how to set up a cicd pipeline with this repo.
-i should probably style it 
+
 
 # links
 https://nestauthfrontend.onrender.com -app
